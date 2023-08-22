@@ -16,9 +16,9 @@ int bfree(void **ptr)
 {
     if (ptr && *ptr)
     {
-        free(*ptr);  // Free the memory pointed to by the pointer
-        *ptr = NULL; // Set the pointer to NULL
-        return (1);  // Return 1 to indicate success
+        free(*ptr);
+        *ptr = NULL;
+        return (1);
     }
-    return (0);  // Return 0 if the pointer was already NULL or if it was invalid
+    return (0);
 }

@@ -10,7 +10,7 @@
  * _strncpy -string copy that copies the string.
  * @dest: where the string is copied to that is the destination.
  * @src: where the string is coming from(source).
- * @n: the total amoun of the characters to be copied.
+ * @n: the total amount of the characters to be copied.
  * Return: the concatenated string.
  */
 char *_strncpy(char *dest, char *src, int n)
@@ -19,7 +19,7 @@ char *_strncpy(char *dest, char *src, int n)
 	char *s = dest;
 
 	d = 0;
-	while (src[d] != '\0' && d < e - 1)
+	while (src[d] != '\0' && d < n - 1)
 	{
 		dest[d] = src[d];
 		d++;
@@ -27,7 +27,7 @@ char *_strncpy(char *dest, char *src, int n)
 	if (d < n)
 	{
 		l = d;
-		while (j < e)
+		while (j < n)
 		{
 			dest(l) = '\0';
 			d++;
@@ -48,17 +48,17 @@ char *_strncat(char *dest, char *src, int n)
 	int d, l;
 	char *s = dest;
 
-	d = 0
-		l = 0
+	d = 0;
+		l = 0;
 		while (dest[d] != '\0')
 			d++;
-	while (src[l] != '\0' && l < e)
+	while (src[l] != '\0' && l < n)
 	{
 		dest[d] = src[l];
 		d++;
 		l++;
 	}
-	if (l < e)
+	if (l < n)
 		dest[d] = '\0';
 	return (s);
 }
@@ -80,6 +80,3 @@ char *_strchr(char *s, char c)
 
 	return (NULL);
 }
-
-
-
