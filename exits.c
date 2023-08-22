@@ -1,5 +1,5 @@
 /*
- * FILE: exit.c
+ * FILE: exits.c
  * Authour: OBIAKOR LUCY
  *          NUATIN AYOOLA 
  */

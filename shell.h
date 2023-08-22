@@ -161,7 +161,7 @@ char **strtow2(char *, char);
 
 /****** _realloc.c ******/
 void ffree(char **);
-void *_realloc(void *, unsigned int, unsigned int);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_memset(char *, char, unsigned int);
 
 /****** _errors1.c ******/
