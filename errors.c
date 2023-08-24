@@ -1,6 +1,6 @@
 /*
  * file: ernor.c
- * Authour: OBIAKOR LUCY(lucyobiakor@gmail.com)
+ * Authour: OBIAKOR LUCY
  *      NUATIN AYOOLA
  */
 
