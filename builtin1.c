@@ -1,7 +1,7 @@
 /*
  * File: builtin1.c
  * Auth: Lucy Obiakor
- *       Ayoola Nuatin 
+ *Ayoola Nuatin
  */
 
 #include "shell.h"
@@ -74,8 +74,10 @@ int print_alias(list_t *node)
 }
 
 /**
- * _myhistory - displaying the history list, one command to another line, preceded with line numbers, starts at 0.
- * @info: Structure contains the potential arguments. It is used to maintain constant function prototype.
+ * _myhistory - displaying the history list, one command to another line,
+ *		preceded with line numbers, starts at 0.
+ * @info: Structure contains the potential arguments.
+ *		It is used to maintain constant function prototype.
  *  Return: Always 0
  */
 int _myhistory(info_t *info)
@@ -86,7 +88,8 @@ int _myhistory(info_t *info)
 
 /**
  * _myalias - mimicry of the alias builtin (man alias).
- * @info: the structure contains potential arguments.It is used in maintaining the constant function prototype.
+ * @info: the structure contains potential arguments.
+ *		It is used in maintaining the constant function prototype.
  *  Return: Always 0
  */
 int _myalias(info_t *info)

@@ -1,7 +1,7 @@
 /*
  * FILE: exits.c
  * Authour: OBIAKOR LUCY
- *          NUATIN AYOOLA 
+ * NUATIN AYOOLA
  */
 
 #include "shell.h"
@@ -15,7 +15,7 @@
  */
 char *_strncpy(char *dest, char *src, int n)
 {
-	int d,l;
+	int d, l;
 	char *s = dest;
 
 	d = 0;
@@ -27,10 +27,10 @@ char *_strncpy(char *dest, char *src, int n)
 	if (d < n)
 	{
 		l = d;
-		while (j < n)
+		while (l < n)
 		{
-			dest(l) = '\0';
-			d++;
+			dest[l] = '\0';
+			l++;
 		}
 	}
 	return (s);
@@ -71,11 +71,11 @@ char *_strncat(char *dest, char *src, int n)
  */
 char *_strchr(char *s, char c)
 {
-	do
-	{
+	do {
 		if (*s == c)
 			return (s);
 	}
+
 	while (*s++ != '\0');
 
 	return (NULL);

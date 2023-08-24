@@ -1,7 +1,7 @@
 /*
  * File: ernors1.c
  * Auth: Lucy Obiakor
- *       Ayoola Nuatin 
+ *	Ayoola Nuatin
  */
 
 #include "shell.h"

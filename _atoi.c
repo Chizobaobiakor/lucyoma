@@ -1,7 +1,6 @@
 /*
  * File: _atoi.c
- * Auth: Lucy Obiakor
- *       Ayoola Nuatin 
+ * Auth:Lucy Obiakor and Ayoola Nuatin
  */
 
 #include "shell.h"

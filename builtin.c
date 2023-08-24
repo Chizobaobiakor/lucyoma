@@ -41,7 +41,9 @@ int _myexit(info_t *info)
  * constant function prototype.
  * Return: Always 0
  */
-{
+int _mycd(info_t *);
+
+int _mycd(info_t *info){
 	char *s, *dir, buffer[1024];
 	int chdir_ret;
 
