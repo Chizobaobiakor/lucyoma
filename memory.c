@@ -1,7 +1,7 @@
 /*
  * FILE: memory.c
  * Authour: OBIAKOR LUCY
- *          NUATIN AYOOLA 
+ * NUATIN AYOOLA
  */
 
 #include "shell.h"
@@ -14,11 +14,11 @@
  */
 int bfree(void **ptr)
 {
-    if (ptr && *ptr)
-    {
-        free(*ptr);
-        *ptr = NULL;
-        return (1);
-    }
-    return (0);
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+		return (1);
+	}
+	return (0);
 }

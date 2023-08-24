@@ -1,3 +1,9 @@
+/*
+ * file: getinfo.c
+ * Authour: OBIAKOR LUCY(lucyobiakor@gmail.com)
+ * NUATIN AYOOLA
+ */
+
 #include "shell.h"
 
 /**
@@ -13,7 +19,8 @@ void clear_info(info_t *info)
 }
 
 /**
- * set_info - Initializes an info_t struct with provided arguments and transformations.
+ * set_info - Initializes an info_t struct with provided arguments
+ *	and transformations.
  * @info: Pointer to the info_t struct to be initialized.
  * @av: Argument vector containing command and arguments.
  */

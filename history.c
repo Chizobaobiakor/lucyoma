@@ -1,10 +1,17 @@
+/*
+ * file: getline.c
+ * Authour: OBIAKOR LUCY(lucyobiakor@gmail.com)
+ * NUATIN AYOOLA
+ */
+
 #include "shell.h"
 
 /**
  * get_history_file - Retrieve the history file path for the shell.
  * @info: Pointer to the info_t struct.
  *
- * Return: Allocated string containing the history file path, or NULL on failure.
+ * Return: Allocated string containing the history file path,
+ *	or NULL on failure.
  */
 char *get_history_file(info_t *info)
 {

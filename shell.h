@@ -1,5 +1,5 @@
-/*
- * shell.h
+/**
+ * SHELL.H
  * Authour: OBIAKOR LUCY(lucyobiakor@gmail.com)
  * NUATIN AYOOLA
  */
@@ -19,7 +19,6 @@
 #include <string.h>
 #include <limits.h>
 #include <fcntl.h>
-#include <stddef.h>
 
 /****** for read/write buffers ******/
 #define READ_BUF_SIZE 1024
@@ -99,13 +98,13 @@ typedef struct passinfo
 	char **environ;
 
 	int readfd;
-	char **cmd_buf; /****** pointer to cmd ; chain buffer, for memory mangement ******/
+	char **cmd_buf; /**pointer to cmd ;chain buffer,for memory mangement**/
 	int histcount;
 	int cmd_buf_type; /****** CMD_type ||, &&, ; ******/
 } info_t;
 
-#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-	0, 0, 0}
+#define INFO_INIT
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0, 0}
 
 /**
  * struct builtin - containing a builtin string and relating function
@@ -143,14 +142,12 @@ char *_strcat(char *, char *);
 int _strcmp(char *, char *);
 char *starts_with(const char *, const char *);
 int _strlen(char *);
-int _strcmp(char *s1, char *s2);
-char *_strcat(char *dest, char *src);
-char *starts_with(const char *haystack, const char *needle);
+
 /****** _string1.c ******/
 int _putchar(char);
 char *_strdup(const char *);
-void _puts(const char *);
-char *_strcpy(char *, const char *);
+void _puts(const char *str);
+char *_strcpy(char *dest, const char *src);
 
 /****** _exits.c ******/
 char *_strncat(char *, char *, int);
@@ -158,12 +155,13 @@ char *_strchr(char *, char);
 char *_strncpy(char *, char *, int);
 
 /****** _tokenizer.c ******/
-char **strtow(char *, char *);
-char **strtow2(char *, char);
+char **tokenize_string(char *str, char *delim);
+//char **strtow(char *, char *);
+//char **strtow2(char *, char);
 
 /****** _realloc.c ******/
 void ffree(char **);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void *_realloc(void *, unsigned int, unsigned int);
 char *_memset(char *, char, unsigned int);
 
 /****** _errors1.c ******/
@@ -204,11 +202,9 @@ int populate_env_list(info_t *);
 int _myenv(info_t *);
 
 /****** _getline.c ******/
-ssize_t input_buf(info_t *info, char **buf, size_t *len);
-ssize_t get_input(info_t *info);
-ssize_t read_buf(info_t *info, char *buf, size_t *i);
-int _getline(info_t *info, char **ptr, size_t *length);
-void sigintHandler(int sig_num);
+int _getline(info_t *, char **, size_t *);
+ssize_t get_input(info_t *);
+void sigintHandler(int);
 
 /****** _lists.c ******/
 int delete_node_at_index(list_t **, unsigned int);

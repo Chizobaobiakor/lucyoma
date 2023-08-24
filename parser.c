@@ -1,7 +1,7 @@
 /*
  * parser.c
  * Authour: OBIAKOR LUCY
- *	    NUATIN AYOOLA 
+ * NUATIN AYOOLA
  */
 
 #include "shell.h"

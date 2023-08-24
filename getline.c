@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /*
- * file: getenv.c
+ * file: getline.c
  * Authour: OBIAKOR LUCY(lucyobiakor@gmail.com)
  * NUATIN AYOOLA
  *
