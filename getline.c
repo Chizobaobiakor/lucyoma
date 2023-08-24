@@ -1,10 +1,6 @@
 #include "shell.h"
 
 /*
- * file: getline.c
- * Authour: OBIAKOR LUCY(lucyobiakor@gmail.com)
- * NUATIN AYOOLA
- *
  * input_buf - Buffers chained commands and processes input.
  * @info: Parameter struct containing program information.
  * @buf: Address of buffer to store input.

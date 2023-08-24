@@ -1,9 +1,3 @@
-/**
- * SHELL.H
- * Authour: OBIAKOR LUCY(lucyobiakor@gmail.com)
- * NUATIN AYOOLA
- */
-
 #ifndef SHELL_H
 #define SHELL_H
 
@@ -103,8 +97,9 @@ typedef struct passinfo
 	int cmd_buf_type; /****** CMD_type ||, &&, ; ******/
 } info_t;
 
-#define INFO_INIT
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0, 0}
+#define INFO_INIT \
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL,\
+	0, 0, 0}
 
 /**
  * struct builtin - containing a builtin string and relating function
@@ -156,8 +151,8 @@ char *_strncpy(char *, char *, int);
 
 /****** _tokenizer.c ******/
 char **tokenize_string(char *str, char *delim);
-//char **strtow(char *, char *);
-//char **strtow2(char *, char);
+char **strtow(char *, char *);
+char **strtow2(char *, char);
 
 /****** _realloc.c ******/
 void ffree(char **);
@@ -213,12 +208,12 @@ list_t *add_node_end(list_t **, const char *, int);
 size_t print_list_str(const list_t *);
 list_t *add_node(list_t **, const char *, int);
 
-/****** _history.c ******/
-int read_history(info_t *info);
-int build_history_list(info_t *info, char *buf, int linecount);
-int write_history(info_t *info);
-int renumber_history(info_t *info);
-char *get_history_file(info_t *info);
+/****** _history.c *****/
+char *history_file(cmd_d *);
+int rd_history(cmd_d *);
+int write_history(cmd_d *);
+int build_history(cmd_d *, char *buf, int line_count);
+int number_history(cmd_d *);
 
 /****** _getenv.c ******/
 int _unsetenv(info_t *, char *);
@@ -239,4 +234,4 @@ int replace_alias(info_t *);
 int is_chain(info_t *, char *, size_t *);
 int replace_string(char **, char *);
 
-#endif/***** _SHELL_H_ *****/
+#endif /*Authour: OBIAKOR LUCY(lucyobiakor@gmail.com) and NUATIN AYOOLA*\

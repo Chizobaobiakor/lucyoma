@@ -1,161 +1,148 @@
-/*
- * file: getline.c
- * Authour: OBIAKOR LUCY(lucyobiakor@gmail.com)
- * NUATIN AYOOLA
- */
-
 #include "shell.h"
 
 /**
- * get_history_file - Retrieve the history file path for the shell.
- * @info: Pointer to the info_t struct.
- *
- * Return: Allocated string containing the history file path,
- *	or NULL on failure.
+ * File: history.c
+ * Auth: Obiakor Lucy
+ * Ayoola Nuatin
  */
-char *get_history_file(info_t *info)
+
+/**
+ * history_file - gets the history file
+ * @cmd_dat: structure type.
+ *
+ * Return: return history file.
+ */
+char *history_file(cmd_d *cmd_dat)
 {
-	char *buf, *dir;
+	char *buf, *_dir;
 
-	dir = _getenv(info, "HOME=");
-	if (!dir)
+	_dir = _get_env(cmd_dat, "HOME=");
+	if (!_dir)
 		return (NULL);
-
-	buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(HIST_FILE) + 2));
+	buf = malloc((string_length(_dir) + string_length(HIST_FILE) + 2) *
+			sizeof(char));
 	if (!buf)
 		return (NULL);
-
 	buf[0] = 0;
-	_strcpy(buf, dir);
-	_strcat(buf, "/");
-	_strcat(buf, HIST_FILE);
-
+	my_str_copy(buf, _dir);
+	str_concat(buf, "/");
+	str_concat(buf, HIST_FILE);
 	return (buf);
 }
 
 /**
- * write_history - Write shell history to a file.
- * @info: Pointer to the info_t struct.
- *
- * Return: 1 on success, -1 on failure.
+ * rd_history - reads history from file
+ * @cmd_dat: structure type
+ * Return: returns history_count if successful and (0) if not
  */
-int write_history(info_t *info)
+
+int rd_history(cmd_d *cmd_dat)
 {
-	ssize_t fd;
-	char *filename = get_history_file(info);
-	list_t *node = NULL;
+	int n, j = 0, line_count = 0;
+	ssize_t f_desc, read_len, f_size = 0;
+	struct stat st;
+	char *buf = NULL, *file_name = history_file(cmd_dat);
 
-	if (!filename)
+	if (!file_name)
+		return (0);
+
+	f_desc = open(file_name, O_RDONLY);
+	free(file_name);
+	if (f_desc == -1)
+		return (0);
+	if (!fstat(f_desc, &st))
+		f_size = st.st_size;
+	if (f_size < 2)
+		return (0);
+	buf = malloc(sizeof(char) * (f_size + 1));
+	if (!buf)
+		return (0);
+	read_len = read(f_desc, buf, f_size);
+	buf[f_size] = 0;
+	if (read_len <= 0)
+		return (free(buf), 0);
+	close(f_desc);
+	for (n = 0; n < f_size; n++)
+		if (buf[n] == '\0')
+		{
+			buf[n] = 0;
+			build_history(cmd_dat, buf + l, line_count++);
+			j = n + 1;
+		}
+	if (j != n)
+		build_history(cmd_dat, buf + l, line_count++);
+	free(buf);
+	cmd_dat->histcount = line_count;
+	while (cmd_dat->histcount-- >= HIST_MAX)
+		delete_node(&(cmd_dat->history), 0);
+	number_history(cmd_dat);
+	return (cmd_dat->histcount);
+}
+
+/**
+ * write_history - creates a new file, or makes changes to an existing file
+ * @cmd_dat: structure type
+ * Return: returns (1) if successful and (-1) if not
+ */
+int write_history(cmd_d *cmd_dat)
+{
+	char *f_name = history_file(cmd_dat);
+	ssize_t f_desc;
+	list_s *node = NULL;
+
+	if (!f_name)
 		return (-1);
 
-	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
-	free(filename);
-	if (fd == -1)
+	f_desc = open(f_name, O_CREAT | O_TRUNC | O_RDWR, 0644);
+	free(f_name);
+	if (f_desc == -1)
 		return (-1);
-
-	for (node = info->history; node; node = node->next)
+	for (node = cmd_dat->history; node; node = node->next)
 	{
-		_putsfd(node->str, fd);
-		_putfd('\n', fd);
+		fd_puts(node->str, f_desc);
+		fd_putc('\0', f_desc);
 	}
-	_putfd(BUF_FLUSH, fd);
-	close(fd);
-
+	fd_putc(BUF_FLUSH, f_desc);
+	close(f_desc);
 	return (1);
 }
 
 /**
- * read_history - Read shell history from a file.
- * @info: Pointer to the info_t struct.
- *
- * Return: Number of history entries read, or 0 on failure.
+ * build_history - adds to the history linked list
+ * @cmd_dat: Structure arguments
+ * @buf: buffer
+ * @line_count: the history count
+ * Return: returns (0)
  */
-int read_history(info_t *info)
+
+int build_history(cmd_d *cmd_dat, char *buf, int line_count)
 {
-	int i, last = 0, linecount = 0;
-	ssize_t fd, rdlen, fsize = 0;
-	struct stat st;
-	char *buf = NULL, *filename = get_history_file(info);
+	list_s *a = NULL;
 
-	if (!filename)
-		return (0);
+	if (cmd_dat->history)
+		a = cmd_dat->history;
+	add_to_list(&a, buf, line_count);
 
-	fd = open(filename, O_RDONLY);
-	free(filename);
-	if (fd == -1)
-		return (0);
-
-	if (!fstat(fd, &st))
-		fsize = st.st_size;
-	if (fsize < 2)
-		return (0);
-	buf = malloc(sizeof(char) * (fsize + 1));
-	if (!buf)
-		return (0);
-
-	rdlen = read(fd, buf, fsize);
-	buf[fsize] = 0;
-	if (rdlen <= 0)
-		return (free(buf), 0);
-	close(fd);
-
-	for (i = 0; i < fsize; i++)
-	{
-		if (buf[i] == '\n')
-		{
-			buf[i] = 0;
-			build_history_list(info, buf + last, linecount++);
-			last = i + 1;
-		}
-	}
-	if (last != i)
-		build_history_list(info, buf + last, linecount++);
-	free(buf);
-
-	info->histcount = linecount;
-	while (info->histcount-- >= HIST_MAX)
-		delete_node_at_index(&(info->history), 0);
-	renumber_history(info);
-
-	return (info->histcount);
-}
-
-/**
- * build_history_list - Add a history entry to the linked list.
- * @info: Pointer to the info_t struct.
- * @buf: Buffer containing the history entry.
- * @linecount: Line count of the history entry.
- *
- * Return: Always 0.
- */
-int build_history_list(info_t *info, char *buf, int linecount)
-{
-	list_t *node = NULL;
-
-	if (info->history)
-		node = info->history;
-	add_node_end(&node, buf, linecount);
-
-	if (!info->history)
-		info->history = node;
+	if (!cmd_dat->history)
+		cmd_dat->history = a;
 	return (0);
 }
 
 /**
- * renumber_history - Renumber history entries in the linked list.
- * @info: Pointer to the info_t struct.
- *
- * Return: The new history entry count.
+ * number_history - numbers the history list after updating it.
+ * @cmd_dat: Structure arguments.
+ * Return: returns the new history count.
  */
-int renumber_history(info_t *info)
-{
-	list_t *node = info->history;
-	int i = 0;
 
-	while (node)
+int number_history(cmd_d *cmd_dat)
+{
+	list_s *nd = cmd_dat->history;
+	int v = 0;
+
+	while (nd)
 	{
-		node->num = i++;
-		node = node->next;
+		nd->num = x++;
+		nd = nd->next;
 	}
-	return (info->histcount = i);
+	return (cmd_dat->histcount = v);
 }

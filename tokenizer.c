@@ -1,49 +1,51 @@
 #include "shell.h"
 
 /**
- * tokenize_string - Splits a string into words based on delimiters.
+ * token - Splits a string into words based on delimiters.
  * @str: The input string to tokenize.
  * @delim: The delimiter characters.
  *
- * Return: A pointer to an array of strings, or NULL on failure.
+ * Return: returns the address to a string array.
  */
-char **tokenize_string(char *str, char *delim)
+char *token(char *str, char *delim)
 {
-	int i, j, k, m, num_words = 0;
-	char **tokens;
+	int n, o, d, l;
+	int word_num = 0;
+	char **s;
 
-	if (!str || str[0] == '\0')
+	if (str == NULL || str[0] == 0)
 		return (NULL);
 	if (!delim)
 		delim = " ";
-	for (i = 0; str[i] != '\0'; i++)
-		if (!is_delim(str[i], delim) && (is_delim(str[i + 1], delim) || !str[i + 1]))
-			num_words++;
+	for (n = 0; str[n] != '\n'; n++)
+		if (!is_delim(str[n], delim) && (is_delim(str[n + 1], delim)
+					|| !str[n + 1]))
+			word_num++;
 
-	if (num_words == 0)
+	if (word_num == 0)
 		return (NULL);
-	tokens = malloc((1 + num_words) * sizeof(char *));
-	if (!tokens)
+	s = malloc((1 + word_num) * sizeof(char *));
+	if (!s)
 		return (NULL);
-	for (i = 0, j = 0; j < num_words; j++)
+	for (n = 0, o = 0; o < word_num; o++)
 	{
-		while (is_delim(str[i], delim))
-			i++;
-		k = 0;
-		while (!is_delim(str[i + k], delim) && str[i + k])
-			k++;
-		tokens[j] = malloc((k + 1) * sizeof(char));
-		if (!tokens[j])
+		while (is_delim(str[n], delim))
+			n++;
+		d = 0;
+		while (!is_delime(str[n + d], delim) && str[n + d])
+			d++;
+		s[o] = malloc((d + 1) * sizeof(char));
+		if (!s[o])
 		{
-			for (k = 0; k < j; k++)
-				free(tokens[k]);
-			free(tokens);
+			for (d = 0; d < o; d++)
+				free(s[d]);
+			free(s);
 			return (NULL);
 		}
-		for (m = 0; m < k; m++)
-			tokens[j][m] = str[i++];
-		tokens[j][m] = '\0';
+		for (l = 0; l < d; l++)
+			s[o][l] = str[n++];
+		s[o][l] = 0;
 	}
-	tokens[j] = NULL;
-	return (tokens);
+	s[o] = NULL;
+	return (s);
 }

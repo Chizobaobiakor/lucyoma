@@ -1,9 +1,3 @@
-/**
- * File: errors1.c
- * Auth: Lucy Obiako
- * Ayoola Nuatin
- */
-
 #include "shell.h"
 
 /**
