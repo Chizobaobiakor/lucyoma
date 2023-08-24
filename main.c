@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * File: main.c
  * Auth: LUCY Obiakor
@@ -27,6 +28,27 @@ int main(int ac, char **av)
 	{
 		ca = open(av[1], O_RDONLY);
 		if (ca == -1)
+=======
+#include "shell.h"
+
+int main(int ac, char **av)
+{
+	info_t info[1];
+	int fd = 2;
+
+	/* Use regular comments */
+	info[0] = INFO_INIT;
+
+	asm ("mov %1, %0\n\t"
+			"add $3, %0"
+			: "=r" (fd)
+			: "r" (fd));
+
+	if (ac == 2)
+	{
+		fd = open(av[1], O_RDONLY);
+		if (fd == -1)
+>>>>>>> pseudo_shell
 		{
 			if (errno == EACCES)
 				exit(126);
@@ -41,7 +63,11 @@ int main(int ac, char **av)
 			}
 			return (EXIT_FAILURE);
 		}
+<<<<<<< HEAD
 		info->readca = ca;
+=======
+		info[0].readfd = fd;
+>>>>>>> pseudo_shell
 	}
 	populate_env_list(info);
 	read_history(info);
