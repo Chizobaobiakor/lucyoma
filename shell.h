@@ -1,7 +1,7 @@
 /*
  * shell.h
  * Authour: OBIAKOR LUCY(lucyobiakor@gmail.com)
- *      NUATIN AYOOLA 
+ * NUATIN AYOOLA
  */
 
 #ifndef SHELL_H
@@ -19,6 +19,7 @@
 #include <string.h>
 #include <limits.h>
 #include <fcntl.h>
+#include <stddef.h>
 
 /****** for read/write buffers ******/
 #define READ_BUF_SIZE 1024
@@ -53,9 +54,9 @@ extern char **environ;
  */
 typedef struct liststr
 {
-        int num;
-        char *str;
-        struct liststr *next;
+	int num;
+	char *str;
+	struct liststr *next;
 } list_t;
 
 /**
@@ -82,30 +83,29 @@ typedef struct liststr
  */
 typedef struct passinfo
 {
-        int argc;
-        unsigned int line_count;
-        char **argv;
-        char *path;
-        int env_changed;
-        int status;
-        char *arg;
-        char *fname;
-        list_t *env;
-        list_t *history;
-        int err_num;
-        int linecount_flag;
-        list_t *alias;
-        char **environ;
+	int argc;
+	unsigned int line_count;
+	char **argv;
+	char *path;
+	int env_changed;
+	int status;
+	char *arg;
+	char *fname;
+	list_t *env;
+	list_t *history;
+	int err_num;
+	int linecount_flag;
+	list_t *alias;
+	char **environ;
 
-        int readfd;
-        char **cmd_buf; /****** pointer to cmd ; chain buffer, for memory mangement ******/
-        int histcount;
-        int cmd_buf_type; /****** CMD_type ||, &&, ; ******/
+	int readfd;
+	char **cmd_buf; /****** pointer to cmd ; chain buffer, for memory mangement ******/
+	int histcount;
+	int cmd_buf_type; /****** CMD_type ||, &&, ; ******/
 } info_t;
 
-#define INFO_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-                0, 0, 0}
+#define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
+	0, 0, 0}
 
 /**
  * struct builtin - containing a builtin string and relating function
@@ -114,8 +114,8 @@ typedef struct passinfo
  */
 typedef struct builtin
 {
-               char *type;
-        int (*func)(info_t *);
+	char *type;
+	int (*func)(info_t *);
 } builtin_table;
 
 /****** _shloop.c ******/
@@ -143,12 +143,14 @@ char *_strcat(char *, char *);
 int _strcmp(char *, char *);
 char *starts_with(const char *, const char *);
 int _strlen(char *);
-
+int _strcmp(char *s1, char *s2);
+char *_strcat(char *dest, char *src);
+char *starts_with(const char *haystack, const char *needle);
 /****** _string1.c ******/
 int _putchar(char);
 char *_strdup(const char *);
-void _puts(char *);
-char *_strcpy(char *, char *);
+void _puts(const char *);
+char *_strcpy(char *, const char *);
 
 /****** _exits.c ******/
 char *_strncat(char *, char *, int);
@@ -202,9 +204,11 @@ int populate_env_list(info_t *);
 int _myenv(info_t *);
 
 /****** _getline.c ******/
-int _getline(info_t *, char **, size_t *);
-ssize_t get_input(info_t *);
-void sigintHandler(int);
+ssize_t input_buf(info_t *info, char **buf, size_t *len);
+ssize_t get_input(info_t *info);
+ssize_t read_buf(info_t *info, char *buf, size_t *i);
+int _getline(info_t *info, char **ptr, size_t *length);
+void sigintHandler(int sig_num);
 
 /****** _lists.c ******/
 int delete_node_at_index(list_t **, unsigned int);

@@ -5,7 +5,7 @@
  * @dest: The destination buffer.
  * @src: The source string.
  *
- * Return: Pointer to the destination buffer.
+ * Return: A pointer to the destination buffer.
  */
 char *_strcpy(char *dest, const char *src)
 {
@@ -91,4 +91,3 @@ int _putchar(char c)
 
 	return (1);
 }
-
